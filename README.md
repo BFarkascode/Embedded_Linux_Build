@@ -112,7 +112,8 @@ Lastly, we will mount the rootfs which will be the Linux root partition.
 
 Mind, for security reasons, it is VERY much recommended to define a vendorfs partition for third party code and userfs sandbox partition. Users will only have access to their own sandbox when setting up the boot, which will protect all sensitive code from accidental corruption. Userfs and vendorfs are not necessary though to set up a bare-bones Linux.
 
-IMPORTANT!!!!
+IMPORTANT!!!
+
 From ssbl and above, we will have a serial output from the MPU with which we can interact or read to look for bugs. This is particularly useful when attempting to debug the boot process and find out, why and where it has collapsed.
 
 For some more info, check the STM32MP1 Platform boot (mind, this is just the MP157 boot, other machines may have a different sequence), the file is called "STM32MP1-Software-Platform_boot_BOOT.pdf".
@@ -131,7 +132,7 @@ The trick here is multiple.
 -	The third trick is that each partition should have a particular file system type and, potentially, additional activation flags. More precisely, the first stage bootloader partitions (both) and the fip partition should all be simple binary partitions, while the bootfs and rootfs ones must be Linux filesystems with bootfs also having the “bootable” flag added to it.
 -	I am not sure about the exact sizing of the partitions if they must follow the offset demanded by the layout file (according to the ST documentation, no), nevertheless they must be big enough to hold the files we will transfer to them. The fsbl first stage bootloader partitions (naming is fsbl1 and fsbl2) must be at least 256kB, the ssbl second stage bootloader (naming is usually fip or fip-a) at least 2MB, the bootfs at least 64 MB and the rootfs the rest.
 -	The card type must be set to “gpt”.
--	
+
 We can then use “fdisk SDCARDDEV” to process the card. The SDCARDDEV can be extracted from “lsblk”. Mind, the Sdcard may have to be mounted/imported to Linux first.
 
 For more on the SDcard populating, see here (but don’t forget to check the branch the proposed build applies to): https://wiki.st.com/stm32mpu/wiki/How_to_populate_the_SD_card_with_dd_command
@@ -139,19 +140,19 @@ For more on the SDcard populating, see here (but don’t forget to check the bra
 ## To read
 I am mostly going along the Shawn Hymel training on embedded Linux, albeit he only does it for the MP157:
 
-Introduction to Embedded Linux Part 1 - Buildroot | Digi-Key Electronics
+[Introduction to Embedded Linux Part 1 - Buildroot | Digi-Key Electronics]
 
 He technically seems to follow this particular lab here, in case someone prefers a more text-based guide compared to a video:
 
-Yocto Project and OpenEmbedded development training – Bootlin
+[Yocto Project and OpenEmbedded development training – Bootlin]
 
 I also suggest checking this video training too to get a feel for more complex actions and how Yocto works:
 
-Intro to Yocto I wish I was given | Part 1: The Basics - YouTube
+[Intro to Yocto I wish I was given | Part 1: The Basics - YouTube]
 
 A very detailed embedded Linux build can be found below as well for multiple board types. Just a note, it is using existing data for the compilation process, not creating everything from scratch and pretty much does the exact same thing what we do using “bitbake”, just doing everything by hand. It is a worthwhile read since it explains the build process very well:
 
-Embedded Linux training – Bootlin
+[Embedded Linux training – Bootlin]
 
 Lastly, the reference manuals for the devices we intend to use.
 
@@ -160,9 +161,7 @@ I was intentionally using generalised speech above to avoid pointing to any spec
 
 For the Beagle, the situation is a bit more complex since the last board update was on “danny” (last update is from 2014). Also, documentation has become rather lacking in the last few years, making it very difficult to figure out, what one should do to make a custom distro for the Beagle. One alternative is to just use the yocto example for the Beagle (select “beaglebone-yocto” as the machine in the “local.conf” file, dependencies are only on the already included yocto layers so no need to adjust the bblayers file) or make everything manually by finding the BSP is called “meta-beagle” or “meta-ti” (an official TI layer on github with multiple dependencies, check the readme files) and then build for the “beaglebone” machine. It thankfully will run on “dunfell” as well. Of note, while the build went through with this approach as well, there was no layout file generated, making it practically impossible for us to construct the SDcard. There is some outdated information on the official BeagleBone site on how to do it, though it didn’t quite match with what I have managed to generate using “dunfell”. Another issue comes with serial communication: while the beagle’s in-built Debian will communicate through the USB with the host, our own embedded Linux will have to be talked to using an external FTDI converter (a USB-serial bridge).
 
-Anyway, due to lacking documentation and low activity on the topic in the forums plus the unnecessary complexity from reading the output from the Beagle, I have decided to carry on with only the MP157 instead. I am thus sharing only the two build configuration files for this machine.
-
-Apart from these two config files for the build (which are shared), everything else is provided by Yocto.
+Anyway, due to lacking documentation and low activity on the topic in the forums plus the unnecessary complexity from reading the output from the Beagle, I have decided to carry on with only the MP157 instead. I am thus sharing the two build configuration files for this machine. If you place them into the yocto folder where your build is suppsoed to be, yocto will automatically read them in and generate a minimal embedded linux for the MP157. Apart from these two config files for the build, everything else is provided by Yocto.
 
 ## Conclusion
 With any luck, the first build above will result in a terminal prompt running on the device with which we can interact via serial connection (I use TerraTerm on Windows). This will be a simple build, a “minimal” one as put by the poky reference distribution which will not have any drivers activated, no additional peripherals, only what is set as a baseline by the boot sequence.
