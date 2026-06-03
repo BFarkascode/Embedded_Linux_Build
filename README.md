@@ -140,19 +140,19 @@ For more on the SDcard populating, see here (but don’t forget to check the bra
 ## To read
 I am mostly going along the Shawn Hymel training on embedded Linux, albeit he only does it for the MP157:
 
-[Introduction to Embedded Linux Part 1 - Buildroot | Digi-Key Electronics]
+https://www.youtube.com/watch?v=9vsu67uMcko
 
 He technically seems to follow this particular lab here, in case someone prefers a more text-based guide compared to a video:
 
-[Yocto Project and OpenEmbedded development training – Bootlin]
+https://bootlin.com/training/yocto/
 
 I also suggest checking this video training too to get a feel for more complex actions and how Yocto works:
 
-[Intro to Yocto I wish I was given | Part 1: The Basics - YouTube]
+https://www.youtube.com/watch?v=0OYP1b06F7Q
 
 A very detailed embedded Linux build can be found below as well for multiple board types. Just a note, it is using existing data for the compilation process, not creating everything from scratch and pretty much does the exact same thing what we do using “bitbake”, just doing everything by hand. It is a worthwhile read since it explains the build process very well:
 
-[Embedded Linux training – Bootlin]
+https://bootlin.com/training/embedded-linux/
 
 Lastly, the reference manuals for the devices we intend to use.
 
