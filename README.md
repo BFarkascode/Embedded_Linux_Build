@@ -38,7 +38,7 @@ Well, the same way as you would handle a Raspberry Pi, you could get a pre-set S
 
 Alternatively, you could build your own OS and select yourself, what you need. You do need to have a system running Linux already.
 
-!!!
+IMPORTANT!!!
 
 I do recommend getting an older version of whatever Linux distro is the most up to date though since there seems to have a rather annoying delay between the newest distro’s launch and the packages catching up with the changes. This means that even if officially things should work, some packages may not play nice with each other, thumbling you into a whole cascade of error messages. For example, I am using Ubuntu 22.04 since that is the last version that is proven to work with all the packages. Later Ubuntu versions come built-in with python 3.12 or later for instance which are not compatible with some of the code we will be using for our build process due to depreciation. It is not obvious to roll back to python 3.10 though.
 
